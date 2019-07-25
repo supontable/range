@@ -1,19 +1,21 @@
-import React from 'react'
+import React, {useMemo} from 'react'
 import useRangeHook from "./useRangeHook"
 
 const Range = (props) => {
   const {min, max, step, marks, name, init = 0} = props
   const [state, setState,loading,setLoading] = useRangeHook(name)
   const inputRef = React.useRef(null)
-  console.log('range render', props.name)
+  let anchor = state[name]
   React.useEffect(() => {
     inputRef.current.addEventListener('change', () => {
       setLoading(state => ({...state, [name]: false}))
     })
     setState(state => ({...state, [name]: init}))
   },[init, name, setLoading, setState])
-  return (
-        <>
+  return useMemo(() => {
+      console.log('meme', name)
+      return (
+      <>
           <input type='range'
                  value={state[name] || init}
                  list="data"
@@ -43,11 +45,10 @@ const Range = (props) => {
                 )
               )}
             </datalist>}
-        </>
+        </>)}, [anchor]
       )
 }
 const RangeMeme = React.memo(({deps, ...rest}) => {
-  console.log('meme', deps)
   return <Range {...rest} />
 })
 export default Range
