@@ -3,47 +3,37 @@ import Counter from "../Counter"
 import Range from "./index"
 import {RangeContext} from "../../RangeContext"
 import {prepareConditions} from "../../helpers"
-import testConditions from "../../models/conditions"
+import {testConditions} from "../../models/conditions"
 
-const Container = ({names = []}) => {
+const Container = () => {
   const [state,setState,,,conditions,setConditions] = useContext(RangeContext)
-  const [cnd, real, length] = prepareConditions(testConditions, names)
+  // console.log(testConditions)
   useEffect(() => {
+    const [converted, virtual, length] = prepareConditions(testConditions)
     async function fetchConditions() {
       setConditions({
-        conditions: cnd,
-        real: real,
+        converted: converted,
+        virtual: virtual,
         length: length
       })
-      let st = {...real}
+      let st = {...virtual}
       Object.keys(st).map(name=>st[name]=st[name][1])
       setState(st)
     }
+    // console.log(converted)
     fetchConditions().then()
   }, [])
-  if (conditions.real && Object.keys(state).length > 0) {
+  if (conditions.virtual && Object.keys(state).length > 0) {
+    const names = Array.from(conditions.converted.names)
     return (
       <>
         <div className='App-header'>
           <Counter />
-          {names.map((name, key) => {
-            const [min, max] = conditions.real ? conditions.real[name] : []
-            const deps = state[name]
-            console.log('before', name, deps)
-            return (
-                <Range key={key} deps={deps} name={name} min={min} max={max} init={max}/>
-            )
-          })}
+          {names.map((name, key) => <Range name={name} key={key} container={'header-'} />)}
         </div>
-        <div className='App-footer'>
+        <div className='App-body'>
           <Counter />
-          {names.map((name, key) => {
-            const [min, max] = conditions.real ? conditions.real[name] : []
-            const deps = state[name]
-            return (
-              <Range key={key} deps={deps} name={name} min={min} max={max} init={max}/>
-            )
-          })}
+          {names.map((name, key) => <Range name={name} key={key} container={'body-'} />)}
         </div>
       </>
     )

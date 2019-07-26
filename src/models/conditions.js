@@ -1,7 +1,7 @@
-export default [
+const testConditions = [
   {
     amountMin: 3000,
-    amountMax: 10000,
+    amountMax: 5000,
     amountStep: 500,
     groupId: 1,
     termMin: 15,
@@ -11,15 +11,16 @@ export default [
     isPromo: false,
   },
   {
-    amountMin: 3000,
+    amountMin: 5500,
     amountMax: 10000,
     amountStep: 500,
-    groupId: 1,
+    groupId: 2,
     termMin: 31,
     termMax: 60,
     termStep: 1,
-    rate: 0.01,
+    rate: 0,
     isPromo: false,
   },
 
 ]
+export {testConditions}

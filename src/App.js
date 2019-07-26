@@ -1,6 +1,6 @@
-import React, {useRef, useLayoutEffect} from 'react';
-import './App.css';
-import './components/Range/range.css';
+import React, {useRef, useLayoutEffect} from 'react'
+import './App.css'
+import './components/Range/range.css'
 import {RangeProvider} from "./RangeContext"
 import Container from "./components/Range/Container"
 
@@ -14,10 +14,10 @@ function App() {
   return (
     <div className="App" ref={myApp}>
       <RangeProvider>
-        <Container names={['amount', 'term']}  />
+        <Container />
       </RangeProvider>
     </div>
   );
 }
 
-export default App;
+export default App

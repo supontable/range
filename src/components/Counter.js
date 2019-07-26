@@ -2,11 +2,11 @@ import React from 'react'
 import {RangeContext} from "../RangeContext"
 
 const Counter = () => {
-  const [state,,loading] = React.useContext(RangeContext)
+  const [state] = React.useContext(RangeContext)
   return (
     Object.keys(state).map(key => {
       const item = state[key]
-      const className = loading[key] ? 'App-logo animated' : 'App-logo'
+      const className = 'App-logo'
       if (item !== false) {
         return (
           <span key={key} className={className}>{item}</span>
